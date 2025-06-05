@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PetSoft - Pet Daycare Management System
 
-## Getting Started
+PetSoft is a modern web application designed to help pet daycare businesses manage their operations efficiently. Built with cutting-edge technologies, it provides a seamless experience for tracking and managing pets under care.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- User authentication (Login/Signup)
+- Pet management system
+- Track pet details including:
+  - Name
+  - Owner information
+  - Age
+  - Notes
+  - Images
+- Modern, responsive UI
+- Dark/Light theme support
+
+## 🛠️ Technologies Used
+
+### Frontend
+
+- **Next.js 15.3.3** - React framework for production
+- **React 19** - UI library
+- **TypeScript** - Type-safe JavaScript
+- **Tailwind CSS** - Utility-first CSS framework
+- **Radix UI** - Unstyled, accessible components
+- **React Hook Form** - Form handling
+- **Zod** - Schema validation
+- **Sonner** - Toast notifications
+
+### Backend
+
+- **Prisma** - Next-generation ORM
+- **SQLite** - Database (can be easily switched to other databases)
+
+### Development Tools
+
+- **ESLint** - Code linting
+- **TypeScript** - Static type checking
+- **Turbopack** - Fast development server
+
+## 🏗️ Project Structure
+
+```
+petsoft/
+├── src/
+│   ├── app/              # Next.js app directory
+│   │   ├── (auth)/      # Authentication routes
+│   │   └── (marketing)/ # Marketing pages
+│   └── components/      # Reusable components
+├── prisma/              # Database schema and migrations
+├── public/             # Static assets
+└── generated/          # Generated Prisma client
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Set up your environment variables:
+   ```bash
+   DATABASE_URL="file:./dev.db"
+   ```
+4. Run database migrations:
+   ```bash
+   npx prisma migrate dev
+   ```
+5. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🔧 Available Scripts
 
-## Learn More
+- `npm run dev` - Start development server with Turbopack
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
 
-To learn more about Next.js, take a look at the following resources:
+## 📝 License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This project is private and proprietary.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 💡 Future Improvements
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Add more pet management features
+- Implement user roles and permissions
+- Add appointment scheduling
+- Integrate payment processing
+- Add reporting and analytics
