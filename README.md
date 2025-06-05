@@ -13,7 +13,6 @@ PetSoft is a modern web application designed to help pet daycare businesses mana
   - Notes
   - Images
 - Modern, responsive UI
-- Dark/Light theme support
 
 ## 🛠️ Technologies Used
 
@@ -44,7 +43,8 @@ PetSoft is a modern web application designed to help pet daycare businesses mana
 ```
 petsoft/
 ├── src/
-│   ├── app/              # Next.js app directory
+│   ├── app/            # Next.js app directory
+│   │   ├── (app)/      # Main Routes
 │   │   ├── (auth)/      # Authentication routes
 │   │   └── (marketing)/ # Marketing pages
 │   └── components/      # Reusable components
