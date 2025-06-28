@@ -7,7 +7,7 @@ import { Pet } from "../../generated/prisma";
 import { PetEssentials } from "@/lib/types";
 
 type PetContextProviderProps = {
-  data: PetEssentials[];
+  data: Pet[];
   children: React.ReactNode;
 };
 
@@ -31,19 +31,23 @@ export default function PetContextProvider({
   const [selectedPetId, setSelectedPetId] = useState<string | null>(null);
   const [optimisticPets, setOptimisticPets] = useOptimistic(
     data,
-    (state, { action, payload }) => {
+    (state, { action, payload }: { 
+      action: string; 
+      payload: PetEssentials | { id: string; newPetData: PetEssentials } | string 
+    }) => {
       switch (action) {
         case "add":
-          return [...state, { ...payload, id: Math.random().toString() }];
+          return [...state, { ...(payload as PetEssentials), id: Math.random().toString(), createdAt: new Date(), updatedAt: new Date() }];
         case "edit":
+          const editPayload = payload as { id: string; newPetData: PetEssentials };
           return state.map((pet) => {
-            if (pet.id === payload.id) {
-              return { ...pet, ...payload.newPetData };
+            if (pet.id === editPayload.id) {
+              return { ...pet, ...editPayload.newPetData };
             }
             return pet;
           });
         case "checkout":
-          return state.filter((pet) => pet.id === payload);
+          return state.filter((pet) => pet.id !== (payload as string));
         default:
           return state;
       }

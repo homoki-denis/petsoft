@@ -5,28 +5,14 @@ import { usePetContext } from "@/lib/hooks";
 import React from "react";
 import PetFormButton from "../PetFormButton";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { DEFAULT_PET_IMAGE } from "@/lib/constants";
+import { petFormSchema, TPetForm } from "@/lib/validations";
 
 type PetFormProps = {
   actionType: "add" | "edit";
   onFormSubmission: () => void;
 };
-
-const petFormSchema = z.object({
-  name: z.string().trim().min(1, { message: "Name is required" }).max(10),
-  ownerName: z
-    .string()
-    .trim()
-    .min(1, { message: "Owner name is required" })
-    .max(10),
-  imageUrl: z.union([
-    z.literal(""),
-    z.string().trim().url({ message: "Image url must be a valid url" }),
-  ]),
-  age: z.coerce.number().int().positive().max(10),
-  notes: z.union([z.literal(""), z.string().trim().max(100)]),
-});
 
 export default function PetForm({
   actionType,
@@ -37,33 +23,32 @@ export default function PetForm({
   const {
     register,
     trigger,
+    getValues,
     formState: { errors },
   } = useForm<TPetForm>({
     resolver: zodResolver(petFormSchema),
+    defaultValues: {
+      name: selectedPet?.name,
+      ownerName: selectedPet?.ownerName,
+      imageUrl: selectedPet?.imageUrl,
+      age: selectedPet?.age,
+      notes: selectedPet?.notes,
+    },
   });
-
-  type TPetForm = z.infer<typeof petFormSchema>;
 
   return (
     <form
-      action={async (formData) => {
+      action={async () => {
         const result = await trigger();
         if (!result) return;
         onFormSubmission();
-        const petData = {
-          ownerName: formData.get("ownerName") as string,
-          imageUrl:
-            (formData.get("imageUrl") as string) ||
-            "https://bytegrad.com/course-assets/react-nextjs/pet-placeholder.png",
-          age: +(formData.get("age") as string),
-          notes: formData.get("notes") as string,
-          name: formData.get("name") as string,
-        };
+        const petData = getValues();
+        petData.imageUrl = petData.imageUrl || DEFAULT_PET_IMAGE;
 
         if (actionType === "add") {
-          await handleAddPet(petData);
+          await handleAddPet({ ...petData, userId: "temp-user-id" });
         } else if (actionType === "edit") {
-          await handleEditPet(selectedPet!.id, petData);
+          await handleEditPet(selectedPet!.id, { ...petData, userId: "temp-user-id" });
         }
       }}
       className="flex flex-col"
